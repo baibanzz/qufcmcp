@@ -38,11 +38,11 @@ func (m *MCP) baseLogin(tool *server.MCPServer) {
 		}
 
 		// 调用登录接口
-		err := m.h.BaseLogin(args.Account, args.Password, mfaCode)
+		token, err := m.h.BaseLogin(args.Account, args.Password, mfaCode)
 		if err != nil {
 			return mcp.NewToolResultError(fmt.Sprintf("登录失败: %v", err)), nil
 		}
 
-		return mcp.NewToolResultText(), nil
+		return mcp.NewToolResultText(token), nil
 	}))
 }

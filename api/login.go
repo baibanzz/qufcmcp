@@ -35,7 +35,7 @@ func (h *HTTP) BaseLogin(user, pass, MFAcode string) (string, error) {
 	}
 	var ret resLogin
 	if err := json.Unmarshal(post, &ret); err != nil {
-		return "nil", err
+		return "", err
 	}
 	h.token = ret.Data.Token
 	return h.token, nil
