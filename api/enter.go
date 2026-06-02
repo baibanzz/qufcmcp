@@ -96,11 +96,10 @@ func (h *HTTP) SetToken(token string) {
 	h.token = token
 }
 
-func New(URL string, Token string) *HTTP {
+func New(URL string) *HTTP {
 	jar, _ := cookiejar.New(nil)
 	return &HTTP{
 		baseURL: URL,
-		token:   Token,
 		client:  &http.Client{Jar: jar},
 	}
 }

@@ -1,6 +1,10 @@
 package api
 
-import "encoding/json"
+import (
+	"clear/global"
+	"encoding/json"
+	"fmt"
+)
 
 type resLogin struct {
 	Code int    `json:"code"`
@@ -25,6 +29,16 @@ type resLogin struct {
 }
 
 func (h *HTTP) BaseLogin(user, pass, MFAcode string) (string, error) {
+	// 如果未提供 MFA 验证码，尝试从配置的密钥自动生成
+	mfaCode := MFAcode
+	if mfaCode == "" && global.Config != nil && global.Config.MFASecret != "" {
+		code, err := GenerateTOTP(global.Config.MFASecret)
+		if err != nil {
+			return "", fmt.Errorf("自动生成MFA验证码失败: %v", err)
+		}
+		mfaCode = code
+	}
+
 	// 先发一个 GET 请求获取 aws_session Cookie（登录接口需要先有 Cookie）
 	_, err := h.GET("/api/fcUserMaterial/findPage", map[string]any{})
 	if err != nil {
@@ -34,7 +48,7 @@ func (h *HTTP) BaseLogin(user, pass, MFAcode string) (string, error) {
 	post, err := h.POST("/api/base/nologin/login", map[string]any{
 		"userName":   user,
 		"password":   pass,
-		"verifyCode": MFAcode,
+		"verifyCode": mfaCode,
 	})
 	if err != nil {
 		return "", err

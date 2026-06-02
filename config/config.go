@@ -3,16 +3,16 @@ package config
 import "os"
 
 type Config struct {
-	URL   string
-	Token string
+	URL       string
+	MFASecret string
 }
 
 // Load loads configuration from environment variables
 func Load() *Config {
 	url := os.Getenv("URL")
-	Token := os.Getenv("TOKEN")
+	mfaSecret := os.Getenv("MFA_SECRET")
 	return &Config{
-		URL:   url,
-		Token: Token,
+		URL:       url,
+		MFASecret: mfaSecret,
 	}
 }

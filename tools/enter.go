@@ -21,7 +21,7 @@ func New() *MCP {
 	)
 	mcp := &MCP{
 		MCPServer: s,
-		h:         api.New(global.Config.URL, global.Config.Token),
+		h:         api.New(global.Config.URL),
 	}
 	mcp.router()
 	return mcp

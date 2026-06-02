@@ -30,7 +30,6 @@ func (m *MCP) baseLogin(tool *server.MCPServer) {
 			mcp.Description("密码"),
 		),
 		mcp.WithString("mfa_code",
-			mcp.Required(),
 			mcp.Description("MFA验证码（如果启用MFA则必填）"),
 		),
 	)
