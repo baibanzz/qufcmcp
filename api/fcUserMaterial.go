@@ -21,3 +21,16 @@ func (h *HTTP) SaveRepeatUser(data map[string]any) (string, error) {
 	}
 	return string(body), nil
 }
+
+// FindPageUserMaterial 用户分页查询 GET /api/fcUserMaterial/findPage
+func (h *HTTP) FindPageUserMaterial(params map[string]string) (string, error) {
+	queryParams := make(map[string]any)
+	for k, v := range params {
+		queryParams[k] = v
+	}
+	body, err := h.GET("/api/fcUserMaterial/findPage", queryParams)
+	if err != nil {
+		return "", err
+	}
+	return string(body), nil
+}

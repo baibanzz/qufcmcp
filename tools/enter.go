@@ -28,8 +28,11 @@ func New() *MCP {
 }
 
 func (m *MCP) router() {
-	//deng'lu
+	//登录工具
 	m.baseLogin(m.MCPServer)
+	//用户管理
 	m.userRepeat(m.MCPServer)
+	m.findPageUser(m.MCPServer)
 	m.saveRepeatUser(m.MCPServer)
+
 }
