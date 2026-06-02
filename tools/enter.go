@@ -36,5 +36,7 @@ func (m *MCP) router() {
 	m.saveRepeatUser(m.MCPServer)
 	//推荐关系
 	m.updateReferral(m.MCPServer)
+	//管理员管理
+	m.findPageAdminUser(m.MCPServer)
 
 }
