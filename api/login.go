@@ -26,9 +26,9 @@ type resLogin struct {
 
 func (h *HTTP) BaseLogin(user, pass, MFAcode string) (string, error) {
 	post, err := h.POST("/api/base/nologin/login", map[string]any{
-		"user_name":   user,
-		"pass_word":   pass,
-		"verify_code": MFAcode,
+		"userName":   user,
+		"password":   pass,
+		"verifyCode": MFAcode,
 	})
 	if err != nil {
 		return "", err

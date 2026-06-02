@@ -30,6 +30,7 @@ func New() *MCP {
 func (m *MCP) router() {
 	//登录工具
 	m.baseLogin(m.MCPServer)
+	m.setToken(m.MCPServer)
 	//用户管理
 	m.userRepeat(m.MCPServer)
 	m.findPageUser(m.MCPServer)

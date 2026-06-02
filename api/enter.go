@@ -40,6 +40,32 @@ func (h *HTTP) POST(URL string, data map[string]any) ([]byte, error) {
 	return body, nil
 }
 
+func (h *HTTP) POSTWithCookie(URL string, data map[string]any, cookies map[string]string) ([]byte, error) {
+	marshal, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("POST", h.baseURL+URL, bytes.NewBuffer(marshal))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Token", h.token)
+	for key, value := range cookies {
+		req.AddCookie(&http.Cookie{Name: key, Value: value})
+	}
+	resp, err := h.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return body, nil
+}
+
 func (h *HTTP) GET(URL string, data map[string]any) ([]byte, error) {
 	var queryParams []string
 	for key, value := range data {
@@ -65,9 +91,14 @@ func (h *HTTP) GET(URL string, data map[string]any) ([]byte, error) {
 	return body, nil
 }
 
+func (h *HTTP) SetToken(token string) {
+	h.token = token
+}
+
 func New(URL string, Token string) *HTTP {
 	return &HTTP{
 		baseURL: URL,
 		token:   Token,
+		client:  &http.Client{},
 	}
 }
