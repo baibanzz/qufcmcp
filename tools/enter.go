@@ -28,5 +28,8 @@ func New() *MCP {
 }
 
 func (m *MCP) router() {
+	//deng'lu
 	m.baseLogin(m.MCPServer)
+	m.userRepeat(m.MCPServer)
+	m.saveRepeatUser(m.MCPServer)
 }
