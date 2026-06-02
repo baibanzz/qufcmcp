@@ -6,13 +6,13 @@ type resLogin struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 	Data struct {
-		Token         string `json:"token"`
-		Nickname      string `json:"nickname"`
-		MerchantCodes string `json:"merchant_codes"`
-		MerchantNames string `json:"merchant_names"`
-		Id            string `json:"id"`
-		RoleIds       string `json:"role_ids"`
-		PermsList     string `json:"perms_list"`
+		Token         string `json:"Token"`
+		Nickname      string `json:"Nickname"`
+		MerchantCodes string `json:"MerchantCodes"`
+		MerchantNames string `json:"MerchantNames"`
+		Id            string `json:"Id"`
+		RoleIds       string `json:"RoleIds"`
+		PermsList     string `json:"PermsList"`
 		AccountType   int    `json:"account_type"`
 		Department    string `json:"department"`
 		LoginIp       string `json:"login_ip"`
@@ -25,6 +25,12 @@ type resLogin struct {
 }
 
 func (h *HTTP) BaseLogin(user, pass, MFAcode string) (string, error) {
+	// 先发一个 GET 请求获取 aws_session Cookie（登录接口需要先有 Cookie）
+	_, err := h.GET("/api/fcUserMaterial/findPage", map[string]any{})
+	if err != nil {
+		return "", err
+	}
+
 	post, err := h.POST("/api/base/nologin/login", map[string]any{
 		"userName":   user,
 		"password":   pass,

@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
 	"strings"
 )
@@ -96,9 +97,10 @@ func (h *HTTP) SetToken(token string) {
 }
 
 func New(URL string, Token string) *HTTP {
+	jar, _ := cookiejar.New(nil)
 	return &HTTP{
 		baseURL: URL,
 		token:   Token,
-		client:  &http.Client{},
+		client:  &http.Client{Jar: jar},
 	}
 }
