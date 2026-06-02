@@ -3,8 +3,8 @@ package config
 import "os"
 
 type Config struct {
-	URL       string
-	MFASecret string
+	URL       string `yaml:"url"`
+	MFASecret string `yaml:"mfa_secret"`
 }
 
 // Load loads configuration from environment variables

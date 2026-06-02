@@ -41,6 +41,8 @@ echo -e "${YELLOW}[4/4] 编译 macOS arm64...${NC}"
 GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o ${BUILD_DIR}/${APP_NAME}-darwin-arm64 .
 echo -e "${GREEN}  -> ${BUILD_DIR}/${APP_NAME}-darwin-arm64${NC}"
 
+cp ./config.yaml ${BUILD_DIR}/config.yaml
+
 echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}  打包完成！${NC}"
 echo -e "${GREEN}  输出目录: ${BUILD_DIR}/${NC}"
